@@ -26,7 +26,6 @@ header span{
 	background-color: #fff;
 	width: 100%;
 	margin-top: 5px;
-	padding: 20px;
 	border-bottom: 2px solid #BDBDBD;
 	box-sizing: border-box;
 	box-shadow: 2px 2px 10px #000;
@@ -43,11 +42,35 @@ header span{
 	padding: 0 10px;
 }
 
+.row header{
+	width: 100%;
+	height: auto;
+	color: #fff;
+	box-sizing: border-box;
+	border: none;
+}
+
 .example{
-	*border: 1px solid #BDBDBD;
+	padding: 10px;
 }
 
 .example h4{
 	margin: 5px;
 	text-decoration: underline;
+}
+
+.right{
+	float: right;
+}
+
+.green{
+	background-color: #4CAF50;
+}
+
+.orange{
+	background-color: #FFC107;
+}
+
+.red{
+	background-color: #F44336;
 }
