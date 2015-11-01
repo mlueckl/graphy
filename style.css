@@ -1,6 +1,6 @@
 body{
 	background-color: #3A3A3A;
-	font-size: 16px;
+	font-size: 14px;
 	font-family: Verdana, sans-serif;
 }
 
@@ -17,60 +17,40 @@ header span{
 	right: 8px;
 }
 
-.content{
-	width: 800px;
+.main{
+	width: 1024px;
 	margin: 0 auto;
 }
 
-.row{
-	background-color: #fff;
-	width: 100%;
-	margin-top: 5px;
-	border-bottom: 2px solid #BDBDBD;
-	box-sizing: border-box;
-	box-shadow: 2px 2px 10px #000;
-}
-
-.row img{
-	width: 18px;
-	vertical-align: middle;
-	margin-right: 10px;
-}
-
-.row p{
-	display: inline-block;
-	padding: 0 10px;
-}
-
-.row header{
-	width: 100%;
-	height: auto;
-	color: #fff;
-	box-sizing: border-box;
-	border: none;
-}
-
-.example{
-	padding: 10px;
-}
-
-.example h4{
-	margin: 5px;
-	text-decoration: underline;
-}
 
 .right{
 	float: right;
 }
 
-.green{
-	background-color: #4CAF50;
+.content{
+	margin: 5px 0;
+	width: 100%;
 }
 
-.orange{
-	background-color: #FFC107;
+table{
+	width: 100%;
+	background-color: #fff;
+	box-sizing: border-box;
 }
 
-.red{
-	background-color: #F44336;
+tr{
+	margin-bottom: 10px;
+	border-bottom: 1px solid #BDBDBD;
+	background-color: #fff;
+}
+
+td{
+	border-bottom: 1px solid #BDBDBD;
+	padding: 10px;
+	margin: 20px;
+	background-color: #fff;
+}
+
+td img{
+	width: 24px;
 }

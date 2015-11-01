@@ -6,7 +6,7 @@
 		<script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
 	</head>
 	<body>
-		<div class="content">
+		<div class="main">
 			<header>
 				<div class="logo">
 					<h1>Sheldon</h1>
@@ -14,6 +14,9 @@
 				</div>
 				<span><?php echo date("G:i:s m.d.y");?></span>
 			</header>
+			<div class="content">
+				<table></table>
+			</div>
 		</div>
 		<script type="text/javascript">
 		window.onload = Init;
@@ -45,21 +48,19 @@
 			        db: [db]
 			    },
 				success: function(data){
-					Append(data);
+					HandleResponse(data);
 					count++;
 					$("#count").text(count + "/" + totalLength);
 				}
 			});
 		}
 
-		function Append(data){
+		function HandleResponse(data){
 
 			if(data[1] != undefined){
 				if(typeof data[1] == "string"){
 					if(data[1].toLowerCase().indexOf("error") > -1 || data[1].toLowerCase().indexOf("forbidden") > -1){
-						var status = "red";
-
-						$(".content").append("<div class='row'><header class='" + status + "'><p>" + data[0] + "</p><p class='right'><b>" + data[2] + "s</b></p></header><div class='example'><p>Response:</p><p>" + data[1] + "</p></div></div>");
+						Append({"data": data});
 					}else{
 						var json = jQuery.parseJSON(data[1]);
 						var arrayIndex = Math.floor(Math.random() * 9) + 1;
@@ -75,23 +76,29 @@
 								status = "red";
 							}
 
-							$(".content").append("<div class='row'><header class='" + status + "'><p>" + data[0] + "</p><p class='right'><b>" + data[2] + "s</b></p></header><div class='example'><p><b>MD5: </b>" + json[0]["md5"] + "</p><p><b>Status: </b>" + json[0]["status"] + "</div></div>");
+							Append({"status": status, "data": data, "json": json, "index": arrayIndex});
 						}else{
-							var status = "red";
-
-							$(".content").append("<div class='row'><header class='" + status + "'><p>" + data[0] + "</p><p class='right'><b>" + data[2] + "s</b></p></header><div class='example'><p>Response:</p><p>" + data[1] + "</p></div></div>");
+							Append({"data": data});
 						}
 					}
 				}else{
-					var status = "red";
-
-					$(".content").append("<div class='row'><header class='" + status + "'><p>" + data[0] + "</p><p class='right'><b>" + data[2] + "s</b></p></header><div class='example'><p>Response:</p><p>" + data[1] + "</p></div></div>");
+					Append({"data": data});
 				}
 			}else{
 				//console.log("Undefined");
 				//console.log(data);
 			}
 		}
+
+		function Append(object){
+			if(object["json"]){
+				$("table").append("<tr><td><img src='img/" + object["status"] + ".png' alt='statusImage'></td><td>" + object["data"][0] + "</td><td>" + object["data"][2] + "s</td><td>" + object["json"][object["index"]]["md5"] + "</td><td>" + object["json"][object["index"]]["status"] + "</td></tr>");
+
+			}else{
+				$("table").append("<tr><td><img src='img/red.png' alt='statusImage'></td><td>" + object["data"][0] + "</td><td>" + object["data"][2] + "s</td><td>Response</td><td>" + object["data"][1] + "</td></tr>");
+			}
+		}
 		</script>
+
 	</body>
 </html>
