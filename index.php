@@ -7,14 +7,17 @@
 	</head>
 	<body>
 		<div class="main">
-			<header>
-				<div class="logo">
-					<h1>Sheldon</h1>
-					<p>Be annoying on <b id="count"></b></p>
-				</div>
-				<span><?php echo date("G:i:s m.d.y");?></span>
-			</header>
+			<div class="logo">
+				<header>
+					<h1>WS Monitoring</h1>
+					<ul>
+						<li>Graph</li>
+					</ul>
+					<span><?php echo date("G:i:s m.d.y");?></span>
+				</header>
+			</div>
 			<div class="content">
+				<b id="count"></b>
 				<table></table>
 			</div>
 		</div>

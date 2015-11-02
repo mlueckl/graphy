@@ -1,14 +1,27 @@
 body{
 	background-color: #3A3A3A;
 	font-size: 14px;
-	font-family: Verdana, sans-serif;
+	font-family: Arial, Helvetica, sans-serif;
+	margin: 0;
+	padding: 0;
 }
 
 header{
-	padding: 5px 15px;
-	border-bottom: 3px solid #BDBDBD;
-	background-color: #fff;
+	padding: 5px 0;
 	position: relative;
+	box-sizing: border-box;
+	color: #fff;
+	width: 1024px;
+	margin: 0 auto;
+}
+
+header h1,
+header p{
+	display: inline-block;
+}
+
+header p{
+	margin-left: 20px;
 }
 
 header span{
@@ -17,8 +30,17 @@ header span{
 	right: 8px;
 }
 
+header ul{
+	padding-left: 10px;
+}
+
+header li{
+	list-style: none;
+	display: inline-block;
+}
+
 .main{
-	width: 1024px;
+	width: 100%;
 	margin: 0 auto;
 }
 
@@ -28,29 +50,44 @@ header span{
 }
 
 .content{
-	margin: 5px 0;
-	width: 100%;
+	margin: 25px auto;
+	width: 1024px;
 }
 
 table{
 	width: 100%;
-	background-color: #fff;
+	background-color: #EEEEEE;
 	box-sizing: border-box;
+	box-shadow: 2px 2px 20px #000;
 }
 
 tr{
 	margin-bottom: 10px;
 	border-bottom: 1px solid #BDBDBD;
-	background-color: #fff;
+	background-color: #EEEEEE;
 }
 
 td{
 	border-bottom: 1px solid #BDBDBD;
 	padding: 10px;
 	margin: 20px;
-	background-color: #fff;
+	background-color: #EEEEEE;
 }
 
 td img{
-	width: 24px;
+	width: 14px;
+}
+
+.logo{
+	background-color: #9C27B0;
+	width: 100%;
+	box-shadow: 2px 2px 20px #000;
+}
+
+#count{
+	float: right;
+	padding: 5px 0;
+	color: #EEEEEE;
+	font-size: 16px;
+	clear: both;
 }

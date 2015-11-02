@@ -4,7 +4,7 @@
     { "db": "CH - Geno Media Circle_Beyond", "url": "http://em5.beyondrm.com/brmapi/criteo?auth1=1164&auth2=c4b90" },
     { "db": "DE - McCrazy_Beyond", "url": "http://em5.beyondrm.com/brmapi/criteo?auth1=1012&auth2=fcf93" },
     { "db": "DE - McCrazy_GFOM_Beyond", "url": "http://em5.beyondrm.com/brmapi/criteo?auth1=1053&auth2=d44c8" },
-    { "db": "DE - Condatix_Beyond", "url": "https://em5.beyondrm.com/brmapi/criteo?auth1=1375&auth2=f7828" },
+    { "db": "DE - Condatix_Beyond", "url": "http://em5.beyondrm.com/brmapi/criteo?auth1=1375&auth2=f7828" },
     { "db": "DE - Schober_Burda_Xqueue", "url": "http://api.maileon.com/criteo/094d038d7015d387" },
     { "db": "DE - Schober_Lifestyle_Xqueue", "url": "http://api.maileon.com/criteo/cd33867b34c9c72e" },
     { "db": "DE - Schober_NICON_Xqueue", "url": "http://api.maileon.com/criteo/23f0d6897f01ee0e" },
