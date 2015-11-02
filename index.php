@@ -2,8 +2,8 @@
 <html>
 	<head>
 		<title>Sheldon - Be noisy</title>
-		<link rel="stylesheet" type="text/css" href="style.css">
-		<script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
+		<link rel="stylesheet" type="text/css" href="css/style.css">
+		<script type="text/javascript" src="js/jquery-latest.min.js"></script>
 	</head>
 	<body>
 		<div class="main">
@@ -11,7 +11,8 @@
 				<header>
 					<h1>WS Monitoring</h1>
 					<ul>
-						<li>Graph</li>
+						<li><a href="chart.html">Graph</a></li>
+						<li><a href="index.php">Check</a></li>
 					</ul>
 					<span><?php echo date("G:i:s m.d.y");?></span>
 				</header>

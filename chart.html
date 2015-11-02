@@ -1,0 +1,55 @@
+<!doctype html>
+<html>
+    <head>
+        <title>Sheldon - Be noisy</title>
+        <link rel="stylesheet" type="text/css" href="css/style.css">
+        <script src="js/chart.min.js"></script>
+    </head>
+    <body>
+        <div class="main">
+			<div class="logo">
+				<header>
+					<h1>WS Monitoring</h1>
+					<ul>
+						<li><a href="chart.html">Graph</a></li>
+                        <li><a href="index.php">Check</a></li>
+					</ul>
+					<span><?php echo date("G:i:s m.d.y");?></span>
+				</header>
+			</div>
+			<div class="content">
+                <h3>DE - Geno Media Circle_Beyond</h3>
+                <canvas id="canvas" height="300" width="1000"></canvas>
+            </div>
+        </div>
+        <script>
+            var randomScalingFactor = function() {
+                return Math.round(Math.random() * 100)
+            };
+
+            var lineChartData = {
+                labels: ["01 January", "02 January", "03 January", "04 January", "05 January", "06 January", "07 January"],
+                datasets: [{
+                    label: "DatabaseName",
+                    fillColor: "rgba(156,39,176,0.2)",
+                    strokeColor: "rgba(156,39,176,1)",
+                    pointColor: "rgba(156,39,176,1)",
+                    pointStrokeColor: "#E0E0E0",
+                    pointHighlightFill: "#E0E0E0",
+                    pointHighlightStroke: "rgba(156,39,176,1)",
+                    data: [randomScalingFactor(), randomScalingFactor(), randomScalingFactor(), randomScalingFactor(), randomScalingFactor(), randomScalingFactor(), randomScalingFactor()]
+                }]
+            }
+
+            Chart.defaults.global.scaleLineColor = "rgba(224,224,224,.4)";
+            Chart.defaults.global.scaleFontColor = "#E0E0E0";
+
+            window.onload = function() {
+                var ctx = document.getElementById("canvas").getContext("2d");
+                window.myLine = new Chart(ctx).Line(lineChartData, {
+                    responsive: true
+                });
+            }
+        </script>
+    </body>
+</html>
