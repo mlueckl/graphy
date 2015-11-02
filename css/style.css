@@ -24,14 +24,18 @@ header p{
 	display: inline-block;
 }
 
+header h1{
+	font-size: 1.1em;
+}
+
 header p{
 	margin-left: 20px;
 }
 
 header span{
 	position: absolute;
-	top: 8px;
-	right: 8px;
+	top: 10px;
+	right: 0;
 }
 
 header ul{
@@ -51,7 +55,7 @@ header li a:visited,
 header li a:active{
 	color: #fff;
 	text-decoration: none;
-	font-size: 16px;
+	font-size: 14px;
 }
 
 .main{
@@ -88,7 +92,7 @@ td img{
 	width: 16px;
 }
 
-.logo{
+.head{
 	background-color: #9C27B0;
 	width: 100%;
 	box-shadow: 2px 2px 20px #000;

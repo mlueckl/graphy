@@ -7,7 +7,7 @@
 	</head>
 	<body>
 		<div class="main">
-			<div class="logo">
+			<div class="head">
 				<header>
 					<h1>WS Monitoring</h1>
 					<ul>
