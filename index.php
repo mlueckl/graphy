@@ -3,23 +3,28 @@
 	<head>
 		<title>Sheldon - Be noisy</title>
 		<link rel="stylesheet" type="text/css" href="css/style.css">
+		<link rel="icon" href="favicon.ico" type="image/x-icon" />
 		<script type="text/javascript" src="js/jquery-latest.min.js"></script>
 	</head>
 	<body>
 		<div class="main">
 			<div class="head">
 				<header>
+					<img src="img/logo.png" alt="Logo">
 					<h1>WS Monitoring</h1>
 					<ul>
-						<li><a href="chart.html">Graph</a></li>
 						<li><a href="index.php">Check</a></li>
+						<li><a href="chart.html">Graph</a></li>
 					</ul>
 					<span><?php echo date("G:i:s m.d.y");?></span>
 				</header>
 			</div>
 			<div class="content">
-				<b id="count"></b>
 				<table></table>
+				<div class="table-footer">
+					<img id="loadingimg" src="img/load.gif" alt="loading">
+					<p id="count"></p>
+				</div>
 			</div>
 		</div>
 		<script type="text/javascript">
@@ -55,6 +60,10 @@
 					HandleResponse(data);
 					count++;
 					$("#count").text(count + "/" + totalLength);
+
+					if( count == totalLength ){
+						$("#loadingimg").hide();
+					}
 				}
 			});
 		}
@@ -96,10 +105,10 @@
 
 		function Append(object){
 			if(object["json"]){
-				$("table").append("<tr><td><img src='img/" + object["status"] + ".png' alt='statusImage'></td><td>" + object["data"][0] + "</td><td>" + object["data"][2] + "s</td><td>" + object["json"][object["index"]]["md5"] + "</td><td>" + object["json"][object["index"]]["status"] + "</td></tr>");
+				$("table").append("<tr><td><img src='img/" + object["status"] + ".png' alt='statusImage'></td><td>" + object["data"][0] + "</td><td class='td-data'>" + object["data"][2] + "s</td><td class='td-data'>" + object["json"][object["index"]]["md5"] + "</td><td class='td-data'>" + object["json"][object["index"]]["status"] + "</td></tr>");
 
 			}else{
-				$("table").append("<tr><td><img src='img/red.png' alt='statusImage'></td><td>" + object["data"][0] + "</td><td>" + object["data"][2] + "s</td><td>Response</td><td>" + object["data"][1] + "</td></tr>");
+				$("table").append("<tr><td><img src='img/red.png' alt='statusImage'></td><td>" + object["data"][0] + "</td><td class='td-data'>" + object["data"][2] + "s</td><td class='td-data'>Response</td><td>" + object["data"][1] + "</td></tr>");
 			}
 		}
 		</script>
