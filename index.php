@@ -14,7 +14,7 @@
 					<h1>WS Monitoring</h1>
 					<ul>
 						<li><a href="index.php">Check</a></li>
-						<li><a href="chart.html">Graph</a></li>
+						<li><a href="chart.php">Graph</a></li>
 					</ul>
 					<span><?php echo date("G:i:s m.d.y");?></span>
 				</header>

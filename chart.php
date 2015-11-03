@@ -1,3 +1,16 @@
+<?php
+require_once("db/db.php");
+$db = new DB();
+$value = $db->query("SELECT * FROM de_ws WHERE dbname like 'DE - Geno Media Circle_Beyond'");
+$labels = array();
+$data = array();
+
+foreach($value as $entry){
+    array_push($labels, $entry["tstamp"]);
+    array_push($data, $entry["time"]);
+}
+?>
+
 <!doctype html>
 <html>
     <head>
@@ -30,7 +43,7 @@
             };
 
             var lineChartData = {
-                labels: ["01 January", "02 January", "03 January", "04 January", "05 January", "06 January", "07 January"],
+                labels: <?php echo json_encode($labels); ?>,
                 datasets: [{
                     label: "DatabaseName",
                     fillColor: "rgba(156,39,176,0.2)",
@@ -39,7 +52,7 @@
                     pointStrokeColor: "#E0E0E0",
                     pointHighlightFill: "#E0E0E0",
                     pointHighlightStroke: "rgba(156,39,176,1)",
-                    data: [randomScalingFactor(), randomScalingFactor(), randomScalingFactor(), randomScalingFactor(), randomScalingFactor(), randomScalingFactor(), randomScalingFactor()]
+                    data: <?php echo json_encode($data); ?>
                 }]
             }
 
