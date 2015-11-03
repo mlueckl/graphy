@@ -1,4 +1,4 @@
-<?php 
+<?php
 require_once("db_config.php");
 
 class DB{
@@ -12,20 +12,20 @@ class DB{
 		$this->conn = $conn;
 	}
 
-	function query(){
+	function query($query){
 		$conn = $this->conn;
-		$result = $conn->query("SELECT * FROM user");
+		$result = $conn->query($query);
 		$data = array();
-		
-		print_r($result);
 
 		/*
-		while($row = $result->fetch_assoc()){
-			array_push($data, $row);
+		if($result->num_rows > 0){
+			while($row = $result->fetch_assoc()){
+				array_push($data, $row);
+			}
 		}
 		*/
 
-		//return $result;
+		return $result;
 	}
 }
 ?>
