@@ -1,14 +1,8 @@
 <?php
 require_once("db/db.php");
 $db = new DB();
-$value = $db->query("SELECT * FROM de_ws WHERE dbname like 'DE - Geno Media Circle_Beyond'");
-$labels = array();
-$data = array();
 
-foreach($value as $entry){
-    array_push($labels, $entry["tstamp"]);
-    array_push($data, $entry["time"]);
-}
+$dbname = $db->query("SELECT DISTINCT dbname FROM de_ws");
 ?>
 
 <!doctype html>
@@ -33,38 +27,34 @@ foreach($value as $entry){
 				</header>
 			</div>
 			<div class="content">
-                <h3>DE - Geno Media Circle_Beyond</h3>
-                <canvas id="canvas" height="300" width="1000"></canvas>
+                <?php 
+                foreach($dbname as $ws){
+                    $labels = $data = array();
+                    $values = $db->query("SELECT * FROM de_ws WHERE dbname like '".$ws["dbname"]."'");
+                  
+                    foreach($values as $entry){
+                        array_push($labels, $entry["tstamp"]);
+                        array_push($data, $entry["time"]);
+                    }
+
+                    $canvasID = strtolower($ws["dbname"]);
+                    $canvasID = str_replace(" ", "", $canvasID);
+                    $canvasID = str_replace("-", "", $canvasID);
+                    $canvasID = str_replace("_", "", $canvasID);
+
+                    echo "<h3>".$ws["dbname"]."</h3>";
+                    echo "<canvas id='".$canvasID."' height='300' width='1000'></canvas>";
+                    echo "<script>";
+                    echo "var lineChartData".$canvasID." = { labels: ".json_encode($labels).",datasets: [{label: 'DatabaseName',fillColor: 'rgba(156,39,176,0.2)',strokeColor: 'rgba(156,39,176,1)',pointColor: 'rgba(156,39,176,1)',pointStrokeColor: '#E0E0E0',pointHighlightFill: '#E0E0E0',pointHighlightStroke: 'rgba(156,39,176,1)',data: ".json_encode($data)."}]};";
+                    echo "Chart.defaults.global.scaleLineColor = 'rgba(224,224,224,.4)';";
+                    echo "Chart.defaults.global.scaleFontColor = '#E0E0E0';";
+                    echo "(function() {";
+                    echo "var ".$canvasID." = document.getElementById('".$canvasID."').getContext('2d');";
+                    echo "window.myLine = new Chart(".$canvasID.").Line(lineChartData".$canvasID.", { responsive: true });";
+                    echo "})()</script>";
+                }
+                ?>
             </div>
         </div>
-        <script>
-            var randomScalingFactor = function() {
-                return Math.round(Math.random() * 100)
-            };
-
-            var lineChartData = {
-                labels: <?php echo json_encode($labels); ?>,
-                datasets: [{
-                    label: "DatabaseName",
-                    fillColor: "rgba(156,39,176,0.2)",
-                    strokeColor: "rgba(156,39,176,1)",
-                    pointColor: "rgba(156,39,176,1)",
-                    pointStrokeColor: "#E0E0E0",
-                    pointHighlightFill: "#E0E0E0",
-                    pointHighlightStroke: "rgba(156,39,176,1)",
-                    data: <?php echo json_encode($data); ?>
-                }]
-            }
-
-            Chart.defaults.global.scaleLineColor = "rgba(224,224,224,.4)";
-            Chart.defaults.global.scaleFontColor = "#E0E0E0";
-
-            window.onload = function() {
-                var ctx = document.getElementById("canvas").getContext("2d");
-                window.myLine = new Chart(ctx).Line(lineChartData, {
-                    responsive: true
-                });
-            }
-        </script>
     </body>
 </html>

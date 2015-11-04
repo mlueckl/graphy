@@ -23,7 +23,7 @@ header{
 }
 
 h3{
-	color: #888;
+	color: #E0E0E0;
 }
 
 header h1,
@@ -88,6 +88,12 @@ td img{
 	text-align: center;
 	line-height: 16px;
 	margin-top: -3px;
+}
+
+canvas{
+	margin-bottom: 25px;
+	padding-bottom: 50px;
+	border-bottom: 1px solid #616161;
 }
 
 .table-footer{
