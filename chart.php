@@ -1,8 +1,24 @@
 <?php
 require_once("db/db.php");
+require_once("class/graph.php");
+require_once("class/graphhub.php");
+
 $db = new DB();
+$graphHub = new GraphHub();
 
 $dbname = $db->query("SELECT DISTINCT dbname FROM de_ws");
+
+foreach($dbname as $ws){
+    $graph = new Graph($ws["dbname"]);
+    $values = $db->query("SELECT * FROM de_ws WHERE dbname like '".$ws["dbname"]."'");
+
+    foreach($values as $entry){
+        $graph->addYAxisValue($entry["tstamp"]);
+        $graph->addData($entry["time"]);
+    }
+
+    $graphHub->addGraph($graph);
+}
 ?>
 
 <!doctype html>
@@ -27,32 +43,10 @@ $dbname = $db->query("SELECT DISTINCT dbname FROM de_ws");
 				</header>
 			</div>
 			<div class="content">
-                <?php 
-                foreach($dbname as $ws){
-                    $labels = $data = array();
-                    $values = $db->query("SELECT * FROM de_ws WHERE dbname like '".$ws["dbname"]."'");
-                  
-                    foreach($values as $entry){
-                        array_push($labels, $entry["tstamp"]);
-                        array_push($data, $entry["time"]);
+                <?php
+                    foreach($graphHub->returnHub() as $graph){
+                        $graph->draw();
                     }
-
-                    $canvasID = strtolower($ws["dbname"]);
-                    $canvasID = str_replace(" ", "", $canvasID);
-                    $canvasID = str_replace("-", "", $canvasID);
-                    $canvasID = str_replace("_", "", $canvasID);
-
-                    echo "<h3>".$ws["dbname"]."</h3>";
-                    echo "<canvas id='".$canvasID."' height='300' width='1000'></canvas>";
-                    echo "<script>";
-                    echo "var lineChartData".$canvasID." = { labels: ".json_encode($labels).",datasets: [{label: 'DatabaseName',fillColor: 'rgba(156,39,176,0.2)',strokeColor: 'rgba(156,39,176,1)',pointColor: 'rgba(156,39,176,1)',pointStrokeColor: '#E0E0E0',pointHighlightFill: '#E0E0E0',pointHighlightStroke: 'rgba(156,39,176,1)',data: ".json_encode($data)."}]};";
-                    echo "Chart.defaults.global.scaleLineColor = 'rgba(224,224,224,.4)';";
-                    echo "Chart.defaults.global.scaleFontColor = '#E0E0E0';";
-                    echo "(function() {";
-                    echo "var ".$canvasID." = document.getElementById('".$canvasID."').getContext('2d');";
-                    echo "window.myLine = new Chart(".$canvasID.").Line(lineChartData".$canvasID.", { responsive: true });";
-                    echo "})()</script>";
-                }
                 ?>
             </div>
         </div>
