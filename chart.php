@@ -10,8 +10,9 @@ $dbname = $db->query("SELECT DISTINCT dbname FROM de_ws");
 
 foreach($dbname as $ws){
     $graph = new Graph($ws["dbname"]);
-    $values = $db->query("SELECT * FROM de_ws WHERE dbname like '".$ws["dbname"]."'");
-
+    //$values = $db->query("SELECT * FROM de_ws WHERE dbname like '".$ws["dbname"]."' LIMIT 50");
+    $values = $db->query("SELECT * FROM de_ws WHERE dbname='".$ws["dbname"]."' AND tstamp > '2015-11-11 00:00:00' ORDER BY tstamp");
+    
     foreach($values as $entry){
         $graph->addYAxisValue($entry["tstamp"]);
         $graph->addData($entry["time"]);
