@@ -8,17 +8,8 @@
 	</head>
 	<body>
 		<div class="main">
-			<div class="head">
-				<header>
-					<img src="img/logo.png" alt="Logo">
-					<h1>WS Monitoring</h1>
-					<ul>
-						<li><a href="index.php">Check</a></li>
-						<li><a href="chart.php">Graph</a></li>
-					</ul>
-					<span><?php echo date("G:i:s m.d.y");?></span>
-				</header>
-			</div>
+			<?php include_once("include/nav.html"); ?>
+			
 			<div class="content">
 				<table></table>
 				<div class="table-footer">

@@ -13,6 +13,11 @@ body{
 	padding: 0;
 }
 
+input{
+	font-family: HurmeGeometricSans2-Regular, sans-serif;
+	font-size: 16px;
+}
+
 header{
 	padding: 5px 0;
 	position: relative;
@@ -131,6 +136,41 @@ canvas{
 .content{
 	margin: 20px auto;
 	width: 1024px;
+	color: #E0E0E0;
+}
+
+.content label{
+	display: block;
+	margin-top: 20px;
+	margin-bottom: 5px;
+}
+
+.content input[type="text"]{
+	padding:7px;
+	border: 2px solid #E0E0E0;
+	transition: all .5s;
+	width: 250px;
+}
+
+.content input[type="text"]:focus{
+	border-color: #9C27B0;
+}
+
+.content input[type="submit"]{
+	margin-top: 15px;
+	cursor: pointer;
+	color: #fff;
+	display: block;
+	padding: 5px 20px;
+	background: none;
+	border: 2px solid #9C27B0;
+	border-radius: 4px;
+	transition: all .3s;
+	outline: none;
+}
+
+.content input[type="submit"]:hover{
+	background: #9C27B0;
 }
 
 .head{

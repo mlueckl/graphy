@@ -17,12 +17,16 @@ class DB{
 		$result = $conn->query($query);
 		$data = array();
 
-		if($result->num_rows > 0){
-			while($row = $result->fetch_assoc()){
-				array_push($data, $row);
+		if(isset($result->num_rows)){
+			if($result->num_rows > 0){
+				while($row = $result->fetch_assoc()){
+					array_push($data, $row);
+				}
 			}
+		}else{
+			return $result;
 		}
-
+		
 		return $data;
 	}
 }
