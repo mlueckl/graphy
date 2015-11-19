@@ -6,20 +6,23 @@ require_once("class/graphhub.php");
 $db = new DB();
 $graphHub = new GraphHub();
 
-$dbname = $db->query("SELECT DISTINCT dbname FROM de_ws");
+$dbname = $db->query("SELECT DISTINCT * FROM dbs");
 
 foreach($dbname as $ws){
-    $graph = new Graph($ws["dbname"]);
+
+    $graph = new Graph($ws["country"] . " - " . $ws["esp_name"] . " - " . $ws["db_name"]);
     //$values = $db->query("SELECT * FROM de_ws WHERE dbname like '".$ws["dbname"]."' LIMIT 50");
-    $values = $db->query("SELECT * FROM de_ws WHERE dbname='".$ws["dbname"]."' AND tstamp > '2015-11-11 00:00:00' ORDER BY tstamp");
-    
+    $values = $db->query("SELECT * FROM response WHERE id='" . $ws['id'] . "' AND timestamp > '2015-11-16 00:00:00' ORDER BY timestamp");
+ 	
     foreach($values as $entry){
-        $graph->addYAxisValue($entry["tstamp"]);
-        $graph->addData($entry["time"]);
+       $graph->addYAxisValue($entry["timestamp"]);
+        $graph->addData($entry["response_time"]);
     }
 
     $graphHub->addGraph($graph);
+
 }
+
 ?>
 
 <!doctype html>
