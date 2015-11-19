@@ -12,7 +12,7 @@ foreach($dbname as $ws){
 
     $graph = new Graph($ws["country"] . " - " . $ws["esp_name"] . " - " . $ws["db_name"]);
     //$values = $db->query("SELECT * FROM de_ws WHERE dbname like '".$ws["dbname"]."' LIMIT 50");
-    $values = $db->query("SELECT * FROM response WHERE id='" . $ws['id'] . "' AND timestamp > '2015-11-16 00:00:00' ORDER BY timestamp");
+    $values = $db->query("SELECT * FROM response WHERE id='" . $ws['id'] . "' AND timestamp > '2015-11-17 00:00:00' ORDER BY timestamp");
  	
     foreach($values as $entry){
        $graph->addYAxisValue($entry["timestamp"]);
