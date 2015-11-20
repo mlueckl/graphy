@@ -11,19 +11,14 @@ $dbname = $db->query("SELECT DISTINCT * FROM dbs");
 foreach($dbname as $ws){
 
     $graph = new Graph(strtoupper($ws["country"]) . " - " . strtoupper($ws["esp_name"]) . " - " . strtoupper($ws["db_name"]));
-    //$values = $db->query("SELECT * FROM de_ws WHERE dbname like '".$ws["dbname"]."' LIMIT 50");
     $values = $db->query("SELECT * FROM response WHERE id='" . $ws['id'] . "' AND timestamp > '2015-11-17 00:00:00' ORDER BY timestamp");
-    $ws_version = $db->query("SELECT ws_version FROM dbs WHERE id='". $ws['id'] . "'");
 
-    if($ws_version[0]["ws_version"] == 2){
-        foreach($values as $entry){
-           $graph->addYAxisValue($entry["timestamp"]);
-           $graph->addData($entry["response_time"]);
-        }
-    
-        $graphHub->addGraph($graph);
+    foreach($values as $entry){
+       $graph->addYAxisValue($entry["timestamp"]);
+       $graph->addData($entry["response_time"]);
     }
 
+    $graphHub->addGraph($graph);
 }
 
 ?>
