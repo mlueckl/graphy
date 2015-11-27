@@ -4,11 +4,13 @@ class Graph{
     protected $name; // Name of the Graph/DB
     protected $yaxis = array(); // Labels for the Graph
     protected $data = array(); // Data to show in Graph
+    protected $entireTime;
 
     // Initialise Graph with Name and generate ID
     function __construct($name){
         $this->id = $this->generateID($name);
         $this->name = $name;
+        $this->entireTime = new stdClass;
     }
 
     // Generate ID based on name
@@ -21,14 +23,22 @@ class Graph{
         return $id;
     }
 
-    // Add y-axis value to y-axis array
-    function addYAxisValue($value){
-        array_push($this->yaxis, $value);
+    // Add data value to data array
+    function addData($timestamp, $value){
+        array_push($this->yaxis, $timestamp);
+        array_push($this->data, $value);
+
+        $timestamp = explode(" ", $timestamp)[0];
+
+        if(!property_exists($this->entireTime, $timestamp)){
+            $this->entireTime->$timestamp = $value;
+        }else{
+            $this->entireTime->$timestamp .= ";".$value;
+        }       
     }
 
-    // Add data value to data array
-    function addData($value){
-        array_push($this->data, $value);
+    function time(){
+        return $this->entireTime;
     }
 
     // Draw Graph to page
@@ -45,7 +55,7 @@ class Graph{
         $html .= "var $this->id = document.getElementById('$this->id').getContext('2d');";
         $html .= "window.myLine = new Chart($this->id).Line(lineChartData$this->id, { responsive: true });";
         $html .= "})()</script>";
-
+        
         echo $html;
     }
 }

@@ -1,24 +1,39 @@
 <?php
 require_once("db/db.php");
+require_once("class/data.php");
 require_once("class/graph.php");
 require_once("class/graphhub.php");
 
+$data = new Data();
 $db = new DB();
 $graphHub = new GraphHub();
+$html = "";
 
-$dbname = $db->query("SELECT DISTINCT * FROM dbs");
+function GenerateGraphs(){
+    global $db;
+    global $graphHub;
+    global $databases;
+    global $html;
+    global $data;
 
-foreach($dbname as $ws){
+    foreach($data->partner() as $ws){
+        if(!empty($ws)){
+            $graph = new Graph(strtoupper($ws["country"]) . " - " . strtoupper($ws["partner_name"]) . " - " . strtoupper($ws["db_name"]));
+            $values = $db->query("SELECT * FROM response WHERE id='" . $ws['id'] . "' AND timestamp > '2015-11-27' ORDER BY timestamp");
 
-    $graph = new Graph(strtoupper($ws["country"]) . " - " . strtoupper($ws["esp_name"]) . " - " . strtoupper($ws["db_name"]));
-    $values = $db->query("SELECT * FROM response WHERE id='" . $ws['id'] . "' AND timestamp > '2015-11-17 00:00:00' ORDER BY timestamp");
+            foreach($values as $entry){
+                $graph->addData($entry["timestamp"], $entry["response_time"]);
+            }
 
-    foreach($values as $entry){
-       $graph->addYAxisValue($entry["timestamp"]);
-       $graph->addData($entry["response_time"]);
+            $graphHub->addGraph($graph);
+        }else{
+            echo "<h2>No Data available</h2>";
+        }
     }
 
-    $graphHub->addGraph($graph);
+    foreach($graphHub->returnHub() as $graph){
+        $html .= $graph->draw();
+    }
 }
 
 ?>
@@ -36,10 +51,20 @@ foreach($dbname as $ws){
 			<?php include_once("include/nav.html"); ?>
 
 			<div class="content">
+                <div class="filter">
+                    <select>
+                        <option selected="true" disabled>Select Partner</option>
+                        <?php
+                            foreach($data->partnerName() as $p){
+                                echo "<option>" . $p . "</option>";
+                            }
+                        ?>
+                    </select>
+                 </div>  
+
                 <?php
-                    foreach($graphHub->returnHub() as $graph){
-                        $graph->draw();
-                    }
+                    GenerateGraphs();
+                    $graphHub::globalAverageGraph();
                 ?>
             </div>
         </div>

@@ -165,7 +165,6 @@ canvas{
 	background: none;
 	border: 2px solid #9C27B0;
 	border-radius: 4px;
-	transition: all .3s;
 	outline: none;
 }
 
@@ -177,4 +176,23 @@ canvas{
 	background-color: #9C27B0;
 	width: 100%;
 	box-shadow: 0 2px 5px #000;
+}
+
+.head header li a{
+	padding: 8px;
+}
+
+.head header ul a:hover{
+	border-bottom: 2px solid #fff;
+}
+
+.filter select{
+	font-size: 16px;
+	border: 1px solid #555;
+	outline: none;
+	padding: 4px;
+	background: #424242;
+	color: #E0E0E0;
+	cursor: pointer;
+	box-shadow: 1.3px 1.3px 4px #000;
 }

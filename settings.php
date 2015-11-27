@@ -21,8 +21,8 @@ session_start();
 						<option value="at">AT</option>
 						<option value="de">DE</option>
 					</select>
-					<label for="espname">ESP name</label>
-					<input type="text" id="espname" name="espname"/>
+					<label for="partnername">Partner name</label>
+					<input type="text" id="partnername" name="partnername"/>
 
 					<label for="dbname">Database name</label>
 					<input type="text" id="dbname" name="dbname"/>

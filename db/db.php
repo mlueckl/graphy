@@ -26,7 +26,7 @@ class DB{
 		}else{
 			return $result;
 		}
-		
+
 		return $data;
 	}
 }
