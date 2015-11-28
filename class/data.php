@@ -19,7 +19,7 @@ class Data{
 		$a = array();
 
 		foreach($this->partner as $p){
-			$name = strtoupper($p["country"]) . " - " . $p["partner_name"];
+			$name = $p["partner_name"];
 			array_push($a, $name);
 		}
 

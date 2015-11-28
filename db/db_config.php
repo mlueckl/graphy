@@ -1,5 +1,5 @@
 <?php
-define("URL", "de-gegk51600j1g"); //"192.168.106.150"
+define("URL", "localhost"); //"de-gegk51600j1g"
 define("USER", "root");
 define("PASSWORD", "");
 define("DB", "wsmon");

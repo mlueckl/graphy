@@ -5,6 +5,30 @@
     font-style: normal;
 }
 
+/* CUSTOM JQUERY */
+.ui-datepicker-header{
+    background-color: #9C27B0 !important;
+    color: #fff !important;;
+    border-color: #9C27B0 !important;;
+}
+
+#ui-datepicker-div{
+    background-color: #424242 !important;;
+    border-color: #424242 !important;;
+    box-shadow: 3px 3px 10px #000;
+}
+
+.ui-datepicker-calendar span{
+    color: #E0E0E0;
+}
+
+.ui-state-highlight{
+    background-color: #9C27B0 !important;
+    color: #fff !important;
+    border-color: #9C27B0 !important;
+}
+/* CUSTOM JQUERY */
+
 body{
 	background-color: #424242;
 	font-size: 16px;
@@ -186,7 +210,9 @@ canvas{
 	border-bottom: 2px solid #fff;
 }
 
+#date,
 .filter select{
+    width: auto;
 	font-size: 16px;
 	border: 1px solid #555;
 	outline: none;

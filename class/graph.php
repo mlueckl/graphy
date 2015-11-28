@@ -13,6 +13,14 @@ class Graph{
         $this->entireTime = new stdClass;
     }
 
+    public function __get($var) {
+        if (isset($this->$var)) {
+            return $this->$var;
+        }else{
+            return "Variable does not exist";
+        }
+    }
+
     // Generate ID based on name
     function generateID($name){
         $id = strtolower($name);
@@ -34,7 +42,7 @@ class Graph{
             $this->entireTime->$timestamp = $value;
         }else{
             $this->entireTime->$timestamp .= ";".$value;
-        }       
+        }
     }
 
     function time(){
@@ -55,7 +63,7 @@ class Graph{
         $html .= "var $this->id = document.getElementById('$this->id').getContext('2d');";
         $html .= "window.myLine = new Chart($this->id).Line(lineChartData$this->id, { responsive: true });";
         $html .= "})()</script>";
-        
+
         echo $html;
     }
 }
