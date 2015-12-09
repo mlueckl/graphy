@@ -57,7 +57,7 @@ class Graph{
         $html .= "<canvas id='$this->id' height='300' width='1000'></canvas>";
         $html .= "<script>";
         $html .= "var lineChartData$this->id = { labels: ".json_encode($this->yaxis).",datasets: [{label: 'DatabaseName',fillColor: 'rgba(156,39,176,0.2)',strokeColor: 'rgba(156,39,176,1)',pointColor: 'rgba(156,39,176,1)',pointStrokeColor: '#E0E0E0',pointHighlightFill: '#E0E0E0',pointHighlightStroke: 'rgba(156,39,176,1)',data: ".json_encode($this->data)."}]};";
-        $html .= "Chart.defaults.global.scaleLineColor = 'rgba(224,224,224,.4)';";
+        $html .= "Chart.defaults.global.scaleLineColor = 'rgba(224,224,224,.5)';";
         $html .= "Chart.defaults.global.scaleFontColor = '#E0E0E0';";
         $html .= "(function() {";
         $html .= "var $this->id = document.getElementById('$this->id').getContext('2d');";

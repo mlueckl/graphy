@@ -1,5 +1,5 @@
 <?php
-define("URL", "localhost"); //"de-gegk51600j1g"
+define("URL", "de-gegk51600j1g"); //"localhost"
 define("USER", "root");
 define("PASSWORD", "");
 define("DB", "wsmon");

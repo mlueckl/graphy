@@ -1,108 +1,125 @@
-<!DOCTYPE html>
+<?php
+require_once("db/db.php");
+require_once("class/data.php");
+require_once("class/graph.php");
+require_once("class/graphhub.php");
+
+if(!empty($_POST)){
+    if (!empty($_POST["filter"])){
+        $filter = $_POST["filter"];
+    }
+
+    if (!empty($_POST["date"])){
+        $date = $_POST["date"];
+    }
+
+}else{
+    $filter = null;
+    $date = null;
+}
+
+$data = new Data();
+$db = new DB();
+$graphHub = new GraphHub();
+$dateToday = date("Y-m-d");
+$html = "";
+
+function GenerateGraphs($filter){
+    global $db;
+    global $graphHub;
+    global $databases;
+    global $html;
+    global $data;
+    global $date;
+    global $dateToday;
+
+    if(!empty($filter)){
+        $dbIds = $db->query("SELECT id FROM dbs WHERE partner_name='$filter'");
+
+        if(count($dbIds) > 0){
+            foreach($dbIds as $id){
+                $partner = $db->query("SELECT * FROM dbs WHERE id='" . $id["id"] . "'");
+
+                if(empty($date)){
+                    $response = $db->query("SELECT * FROM response WHERE id='" . $id["id"] . "' AND timestamp > '$dateToday' ORDER BY timestamp");
+                }else{
+                    $response = $db->query("SELECT * FROM response WHERE id='" . $id["id"] . "' AND timestamp BETWEEN '$date 00:00:00.00' AND '$date 23:59:59.999' ORDER BY timestamp");
+                }
+
+                $graph = new Graph(strtoupper($partner[0]["country"]) . " - " . strtoupper($partner[0]["partner_name"]) . " - " . strtoupper($partner[0]["db_name"]));
+
+                foreach($response as $entry){
+                    $graph->addData($entry["timestamp"], $entry["response_time"]);
+                }
+
+                $graphHub->addGraph($graph);
+            }
+        }
+
+    }
+
+    foreach($graphHub->returnHub() as $graph){
+        $html .= $graph->draw();
+    }
+}
+?>
+
+<!doctype html>
 <html>
-	<head>
-		<title>Sheldon - Be noisy</title>
-		<link rel="stylesheet" type="text/css" href="css/style.css">
-		<link rel="icon" href="favicon.ico" type="image/x-icon" />
-		<script type="text/javascript" src="js/jquery-latest.min.js"></script>
-	</head>
-	<body>
-		<div class="main">
+    <head>
+        <title>Sheldon - Be noisy</title>
+        <link rel="icon" href="favicon.ico" type="image/x-icon" />
+        <link rel="stylesheet" type="text/css" href="css/style.css">
+        <link rel="stylesheet" tpye="text/css" href="css/jquery-ui.min.css">
+        <script src="js/chart.min.js"></script>
+    </head>
+    <body>
+        <div class="main">
 			<?php include_once("include/nav.html"); ?>
-			
+
 			<div class="content">
-				<table></table>
-				<div class="table-footer">
-					<img id="loadingimg" src="img/load.gif" alt="loading">
-					<p id="count"></p>
-				</div>
-			</div>
-		</div>
-		<script type="text/javascript">
-		window.onload = Init;
-		var count = 0;
-		var totalLength = 0;
+                <div class="filter">
+                    <form method="post" >
+                        <select onchange="this.form.submit()" name="filter">
+                            <option selected="true" id="selectedpartner" disabled>Select Partner</option>
+                            <?php
+                                foreach($data->partnerName() as $p){
 
-		function Init(){
-			LoadData();
-		}
+                                    if($filter == $p){
+                                        echo "<option selected='true' value='$p'>" . $p . "</option>";
+                                    }else{
+                                        echo "<option value='$p'>" . $p . "</option>";
+                                    }
 
-		function LoadData(){
-			jQuery.get("data.json", function(data) {
-			   console.log("=> Load file and parse to JSON");
-			   for(var i=0; i < data.length; i++){
-				    totalLength = data.length;
-			   		Request(data[i]["db"], data[i]["url"]);
-			   }
-			});
-		}
+                                }
+                            ?>
+                        </select>
 
-		function Request(db, url){
-			$.ajax({
-				type: "POST",
-			    url: "curl.php",
-			    dataType: "json",
-			    data: {
-			        url: url,
-			        param: "q%5B0%5D=3190a055b7f198af816c1f111f4ad535&q%5B1%5D=a78d43db809c1b816b1ece087ef176cd&q%5B2%5D=72ade56f8df948a55dce90878d65ed68&q%5B3%5D=9bacef70ee59f7b6ec0fe8f379b3ecf3&q%5B4%5D=a4aad8bdbde7573305b26d0e048339af&q%5B5%5D=73f3349731c05ea293ea0827a7d5dc4b&q%5B6%5D=1bdd0aacde59bbb69da2bc7ac1b08ae3&q%5B7%5D=6fa120615afa4b0cbb8de1be8d20756b&q%5B8%5D=497972b55aa390b4f4fff937a2e6d412&q%5B9%5D=772e5ef21cd037e1b3b3e77bf5cfb3dc",
-			        db: [db]
-			    },
-				success: function(data){
-					HandleResponse(data);
-					count++;
-					$("#count").text(count + "/" + totalLength);
+                        <?php
 
-					if( count == totalLength ){
-						$("#loadingimg").hide();
-					}
-				}
-			});
-		}
+                            if(!empty($date)){
+                                echo "<input onchange='this.form.submit()' type='text' id='date' name='date' value='$date'>";
+                            }else{
+                                echo "<input onchange='this.form.submit()' type='text' id='date' name='date' value='$dateToday'>";
+                            }
+                        ?>
+                    </form>
+                 </div>
 
-		function HandleResponse(data){
+                <?php
+                    if(!empty($filter)){
+                        GenerateGraphs($filter);
+                    }else{
+                        //echo "Please select a Partner";
+                    }
+                ?>
+            </div>
+        </div>
 
-			if(data[1] != undefined){
-				if(typeof data[1] == "string"){
-					if(data[1].toLowerCase().indexOf("error") > -1 || data[1].toLowerCase().indexOf("forbidden") > -1){
-						Append({"data": data});
-					}else{
-						var json = jQuery.parseJSON(data[1]);
-						var arrayIndex = Math.floor(Math.random() * 9) + 1;
-
-						if(json[arrayIndex]["md5"]){
-							if(json == ""){
-								status = "red";
-							}else if(data[2] < 1){
-								status = "green";
-							}else if(data[2] < 5){
-								status = "orange";
-							}else{
-								status = "red";
-							}
-
-							Append({"status": status, "data": data, "json": json, "index": arrayIndex});
-						}else{
-							Append({"data": data});
-						}
-					}
-				}else{
-					Append({"data": data});
-				}
-			}else{
-				//console.log("Undefined");
-				//console.log(data);
-			}
-		}
-
-		function Append(object){
-			if(object["json"]){
-				$("table").append("<tr><td><img src='img/" + object["status"] + ".png' alt='statusImage'></td><td>" + object["data"][0] + "</td><td class='td-data'>" + object["data"][2] + "s</td><td class='td-data'>" + object["json"][object["index"]]["md5"] + "</td><td class='td-data'>" + object["json"][object["index"]]["status"] + "</td></tr>");
-
-			}else{
-				$("table").append("<tr><td><img src='img/red.png' alt='statusImage'></td><td>" + object["data"][0] + "</td><td class='td-data'>" + object["data"][2] + "s</td><td class='td-data'>Response</td><td>" + object["data"][1] + "</td></tr>");
-			}
-		}
-		</script>
-
-	</body>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+        <script src="js/jquery-ui.js"></script>
+        <script type="text/javascript">
+            $("#date").datepicker({ dateFormat: "yy-mm-dd"});
+        </script>
+    </body>
 </html>

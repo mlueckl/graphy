@@ -60,6 +60,11 @@ header p{
 	display: inline-block;
 }
 
+header .active{
+	font-size: 16px;
+	border-bottom: 2px solid #fff;
+}
+
 header h1{
 	font-size: 1.1em;
 }
@@ -163,20 +168,48 @@ canvas{
 	color: #E0E0E0;
 }
 
+.content .form{
+	width: 60%;
+}
+
 .content label{
-	display: block;
-	margin-top: 20px;
+	display: inline-block;
+	margin-top: 10px;
 	margin-bottom: 5px;
 }
 
 .content input[type="text"]{
-	padding:7px;
-	border: 2px solid #E0E0E0;
-	transition: all .5s;
-	width: 250px;
+	width: 100%;
+	box-sizing: border-box;
+}
+
+#date,
+.filter select,
+.form select{
+    width: auto;
+	font-size: 16px;
+	cursor: pointer;
+}
+
+.content input[type="text"],
+#date,
+.filter select,
+.form select{
+	border: 2px solid #555;
+	outline: none;
+	padding: 7px;
+	background: #424242;
+	color: #E0E0E0;
+	box-shadow: 1.3px 1.3px 4px #000;
+	transition: all .4s;
 }
 
 .content input[type="text"]:focus{
+	border-color: #9C27B0;
+}
+
+.filter select:focus,
+.form select:focus{
 	border-color: #9C27B0;
 }
 
@@ -186,14 +219,14 @@ canvas{
 	color: #fff;
 	display: block;
 	padding: 5px 20px;
-	background: none;
+	background: #9C27B0;
 	border: 2px solid #9C27B0;
-	border-radius: 4px;
 	outline: none;
+	transition: all .17s;
 }
 
 .content input[type="submit"]:hover{
-	background: #9C27B0;
+	box-shadow: 0 2px 5px #000;
 }
 
 .head{
@@ -208,17 +241,4 @@ canvas{
 
 .head header ul a:hover{
 	border-bottom: 2px solid #fff;
-}
-
-#date,
-.filter select{
-    width: auto;
-	font-size: 16px;
-	border: 1px solid #555;
-	outline: none;
-	padding: 4px;
-	background: #424242;
-	color: #E0E0E0;
-	cursor: pointer;
-	box-shadow: 1.3px 1.3px 4px #000;
 }

@@ -16,6 +16,7 @@ if(!empty($_POST)){
 		
 		unset($_POST);
 	}else{
+		$_SESSION["response"] = "missing";
 		unset($_POST);
 	}
 }

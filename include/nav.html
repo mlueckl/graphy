@@ -1,11 +1,21 @@
+<?php
+$path = $_SERVER['REQUEST_URI'];
+$index = $add = null;
+
+if(strpos($path, "add")){
+	$add = "active";
+}else{
+	$index = "active";
+}
+
+?>
 <div class="head">
 	<header>
         <img src="img/logo.png" alt="Logo">
 		<h1>WS Monitoring</h1>
 		<ul>
-            <li><a href="index.php">Check</a></li>
-            <li><a href="chart.php">Graph</a></li>
-            <li><a href="settings.php">Settings</a></li>
+            <li><a href="index.php" class="<?php echo $index ?>">Graph</a></li>
+            <li><a href="add.php" class="<?php echo $add ?>">Add</a></li>
 		</ul>
 		<span><?php echo date("G:i:s m.d.y");?></span>
 	</header>
