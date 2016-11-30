@@ -67,7 +67,7 @@ function GenerateGraphs($filter){
 <!doctype html>
 <html>
     <head>
-        <title>Sheldon - Be noisy</title>
+        <title>Graphy</title>
         <link rel="icon" href="favicon.ico" type="image/x-icon" />
         <link rel="stylesheet" type="text/css" href="css/style.css">
         <link rel="stylesheet" tpye="text/css" href="css/jquery-ui.min.css">
