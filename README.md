@@ -1,2 +1,2 @@
 # Graphy
-Tool to call APIs, check there availablity and save response time.
+Tool to call APIs, check their availablity and response time and show history in fancy Graph
